@@ -1,0 +1,250 @@
+{
+  "schemaVersion": 1,
+  "profile": {
+    "familyName": {
+      "ja": "木村",
+      "en": "KIMURA"
+    },
+    "givenName": {
+      "ja": "亮太",
+      "en": "Ryota"
+    },
+    "affiliations": [
+      {
+        "organization": {
+          "ja": "東京大学",
+          "en": "The University of Tokyo"
+        },
+        "department": {
+          "ja": "大学院情報理工学系研究科 知能機械情報学専攻",
+          "en": "The Graduate School of Information Science and Technology Department of Mechano-Informatics"
+        }
+      }
+    ],
+    "links": [
+      {
+        "label": "researchmap",
+        "url": "https://researchmap.jp/kmraven"
+      },
+      {
+        "label": "ORCID",
+        "url": "https://orcid.org/0009-0005-1321-2218"
+      }
+    ]
+  },
+  "researchAreas": [
+    {
+      "discipline": {
+        "ja": "ライフサイエンス",
+        "en": "Life sciences"
+      },
+      "field": {
+        "ja": "神経科学一般",
+        "en": "Neuroscience - general"
+      }
+    },
+    {
+      "discipline": {
+        "ja": "情報通信",
+        "en": "Informatics"
+      },
+      "field": {
+        "ja": "感性情報学",
+        "en": "Sensitivity (kansei) informatics"
+      }
+    }
+  ],
+  "experience": [
+    {
+      "organization": {
+        "ja": "独立行政法人日本学術振興会",
+        "en": "Japan Society for the Promotion of Science"
+      },
+      "department": {
+        "ja": "特別研究員(DC2)",
+        "en": "Research Fellow (DC2)"
+      },
+      "start": "2027-04",
+      "end": "2029-03"
+    }
+  ],
+  "education": [
+    {
+      "organization": {
+        "ja": "東京大学",
+        "en": "The University of Tokyo"
+      },
+      "department": {
+        "ja": "大学院情報理工学系研究科",
+        "en": "The Graduate School of Information Science and Technology"
+      },
+      "course": {
+        "ja": "知能機械情報学専攻",
+        "en": "Department of Mechano-Informatics"
+      },
+      "start": "2026-04",
+      "end": null
+    },
+    {
+      "organization": {
+        "ja": "慶應義塾大学",
+        "en": "Keio University"
+      },
+      "department": {
+        "ja": "理工学研究科",
+        "en": "Graduate School of Science and Technology"
+      },
+      "course": {
+        "ja": "基礎理工学専攻, 生命システム情報専修",
+        "en": "Center for Biosciences and Informatics, School of Fundamental Science and Technology"
+      },
+      "start": "2024-04",
+      "end": "2026-03"
+    },
+    {
+      "organization": {
+        "ja": "慶應義塾大学",
+        "en": "Keio University"
+      },
+      "department": {
+        "ja": "理工学部",
+        "en": "Faculty of Science and Technology"
+      },
+      "course": {
+        "ja": "生命情報学科",
+        "en": "Department of Biosciences and Infomatics"
+      },
+      "start": "2019-04",
+      "end": "2024-03"
+    }
+  ],
+  "publications": [
+    {
+      "title": {
+        "en": "Dance to Music Generation leveraging Pre-training with Unpaired data and Contrastive Alignment"
+      },
+      "authors": {
+        "en": [
+          "Ryota Kimura",
+          "Sangheon Park",
+          "Natalia Polouliakh",
+          "Taketo Akama"
+        ]
+      },
+      "date": "2026-07-12",
+      "kind": "preprint",
+      "abstract": {
+        "en": "Dance-to-music generation is a promising task for applications such as choreography support and automatic accompaniment, where temporal coordination between body movement and sound is essential. In particular, using human joint positions as the motion representation is attractive because they explicitly capture body dynamics while being lightweight, privacy-preserving, and easy to integrate with motion capture and pose-estimation pipelines. A central challenge in this setting, however, is the scarcity of high-quality paired dance-music data, since collecting accurately synchronized pairs is costly and often constrained by copyright and performance rights. This makes it difficult to train end-to-end models solely from paired data. To address this issue, we propose a dance-conditioned music generation framework that efficiently exploits both unpaired and paired data. Our method combines pretrained unimodal encoders for motion and music, beat-guided contrastive pretraining to align their feature spaces, and a ControlNet-style conditioning module on top of a pretrained text-to-audio diffusion model. Experiments on AIST++ demonstrate that the proposed techniques improve both dance-music alignment and audio quality, as confirmed by quantitative and qualitative evaluations. Compared to a state-of-the-art method, our approach achieves superior dance alignment performance and competitive audio quality. Code is available at https://github.com/kmraven/AudioLDM-ControlNet ."
+      },
+      "links": [
+        {
+          "label": "arXiv",
+          "url": "https://arxiv.org/abs/2607.10537"
+        },
+        {
+          "label": "PDF",
+          "url": "https://arxiv.org/pdf/2607.10537v1"
+        },
+        {
+          "label": "Code",
+          "url": "https://github.com/kmraven/AudioLDM-ControlNet"
+        }
+      ]
+    }
+  ],
+  "presentations": [
+    {
+      "title": {
+        "ja": "齧歯類の音選好行動における瞳孔径計測"
+      },
+      "authors": {
+        "ja": [
+          "木村亮太",
+          "星野 有佐",
+          "白松(磯口)知世",
+          "高橋 宏知"
+        ]
+      },
+      "event": {
+        "ja": "日本動物行動学会"
+      },
+      "date": "2026-09",
+      "type": "poster"
+    },
+    {
+      "title": {
+        "ja": "線虫の移動機構の理解に向けた時空間的な牽引力計測"
+      },
+      "authors": {
+        "ja": [
+          "木村亮太",
+          "森倉峻",
+          "宮田昌悟",
+          "塚田祐基",
+          "舟橋啓"
+        ]
+      },
+      "event": {
+        "ja": "理論生物学スプリングスクール(SSTB)"
+      },
+      "date": "2026-03",
+      "type": "poster"
+    },
+    {
+      "title": {
+        "en": "Spatiotemporal Traction Force Measurement Toward Understanding the Locomotion Mechanism of C. elegans"
+      },
+      "authors": {
+        "en": [
+          "Ryota Kimura",
+          "Takashi Morikura",
+          "Shogo Miyata",
+          "Yuki Tsukada",
+          "Akira Funahashi"
+        ]
+      },
+      "event": {
+        "en": "Keio University - Academia Sinica Joint Workshop"
+      },
+      "date": "2025-11",
+      "type": "poster"
+    },
+    {
+      "title": {
+        "en": "Spatiotemporal Traction Force Measurement Toward Understanding the Locomotion Mechanism of C. elegans"
+      },
+      "authors": {
+        "en": [
+          "Ryota Kimura",
+          "Takashi Morikura",
+          "Shogo Miyata",
+          "Yuki Tsukada",
+          "Akira Funahashi"
+        ]
+      },
+      "event": {
+        "en": "25th International Worm Meeting"
+      },
+      "date": "2025-06",
+      "type": "poster"
+    },
+    {
+      "title": {
+        "ja": "線虫の蛇行運動機構の理解に向けた時空間的な応力計測"
+      },
+      "authors": {
+        "ja": [
+          "木村亮太",
+          "森倉峻",
+          "塚田祐基",
+          "舟橋啓"
+        ]
+      },
+      "event": {
+        "ja": "CREST革新的計測 第2回領域会議"
+      },
+      "date": "2024-04",
+      "type": "poster"
+    }
+  ]
+}

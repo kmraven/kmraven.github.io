@@ -1,0 +1,9 @@
+---
+import { profileLinks } from '../data';
+import Arrow from './Arrow.astro';
+interface Props { compact?: boolean }
+const { compact = false } = Astro.props;
+---
+<ul class:list={['profile-links', { compact }]}>
+  {profileLinks.map((link) => <li><a href={link.url}><span>{link.label}</span><Arrow /></a></li>)}
+</ul>

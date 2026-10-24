@@ -1,0 +1,8 @@
+---
+import type { Locale, LocalizedText } from '../data/schema';
+import { translated } from '../lib/i18n';
+interface Props { value: LocalizedText | undefined; lang: Locale; class?: string }
+const { value, lang, class: className } = Astro.props;
+const result = translated(value, lang);
+---
+<span lang={result.lang} class={className}>{result.text}</span>

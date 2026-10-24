@@ -1,0 +1,57 @@
+---
+import '../styles/global.css';
+import { data } from '../data';
+import type { Locale } from '../data/schema';
+import { copy, fullName, pagePath, type PageKey } from '../lib/i18n';
+interface Props { lang: Locale; page: PageKey; title: string; description: string }
+const { lang, page, title, description } = Astro.props;
+const t = copy[lang];
+const otherLang = lang === 'ja' ? 'en' : 'ja';
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const name = fullName(data.profile, 'en');
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#142d42" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="ja" href={new URL(pagePath(page, 'ja'), Astro.site)} />
+    <link rel="alternate" hreflang="en" href={new URL(pagePath(page, 'en'), Astro.site)} />
+    <link rel="alternate" hreflang="x-default" href={new URL(pagePath(page, 'ja'), Astro.site)} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={name} />
+    <meta property="og:locale" content={lang === 'ja' ? 'ja_JP' : 'en_US'} />
+    <meta property="og:locale:alternate" content={lang === 'ja' ? 'en_US' : 'ja_JP'} />
+    <meta name="twitter:card" content="summary" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+  </head>
+  <body class:list={[`page-${page}`]}>
+    <a class="skip-link" href="#main">{t.skip}</a>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href={pagePath('home', lang)} aria-label={`${name} — ${t.home}`}><span class="brand-mark" aria-hidden="true">rk<span>.</span></span><span class="brand-name">{name}</span></a>
+        <div class="header-navigation">
+          <nav aria-label={t.navigation}>
+            <ul class="nav-links">{(['home', 'publications', 'cv'] as const).map((key) => <li><a href={pagePath(key, lang)} aria-current={page === key ? 'page' : undefined}>{t[key]}</a></li>)}</ul>
+          </nav>
+          <div class="language-switch" aria-label={lang === 'ja' ? '言語' : 'Language'}>
+            <span aria-current="true" lang={lang}>{lang.toUpperCase()}</span><span class="language-divider" aria-hidden="true">/</span><a href={pagePath(page, otherLang)} lang={otherLang} hreflang={otherLang} aria-label={otherLang === 'en' ? 'English version' : '日本語版'}>{otherLang.toUpperCase()}</a>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main id="main" class="site-main" tabindex="-1"><slot /></main>
+    <footer class="site-footer">
+      <div class="footer-inner"><span>{name}</span><a href={data.profile.links.find((link) => link.label === 'researchmap')?.url}>researchmap <span aria-hidden="true">↗</span></a></div>
+    </footer>
+  </body>
+</html>

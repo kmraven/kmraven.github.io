@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.astro/
+.cache/
+.tools/
+.env
+.env.*
+!.env.example
+.DS_Store
+
+# Original exports contain private and researchers-only information.
+*.jsonl
+*.zip
+private/
+coverage/
+test-results/

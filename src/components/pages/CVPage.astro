@@ -1,0 +1,35 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { data } from '../../data';
+import type { Locale } from '../../data/schema';
+import { copy, fullName, pageDescription } from '../../lib/i18n';
+import Localized from '../Localized.astro';
+import ProfileLinks from '../ProfileLinks.astro';
+import HistoryList from '../HistoryList.astro';
+import PublicationEntry from '../PublicationEntry.astro';
+import PresentationEntry from '../PresentationEntry.astro';
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const t = copy[lang];
+const groups = [
+  { id: 'cv-papers', title: t.papers, entries: data.publications.filter((item) => item.kind === 'paper') },
+  { id: 'cv-preprints', title: t.preprints, entries: data.publications.filter((item) => item.kind === 'preprint') },
+].filter((group) => group.entries.length);
+---
+<SiteLayout lang={lang} page="cv" title={`CV | ${fullName(data.profile, lang)}`} description={pageDescription('cv', lang, fullName(data.profile, lang))}>
+  <div class="page-heading cv-heading"><div><p class="eyebrow" lang="en">Academic profile</p><h1 lang="en">{t.cvTitle}</h1><p class="cv-name">{fullName(data.profile, lang)} <span lang={lang === 'ja' ? 'en' : 'ja'}>{fullName(data.profile, lang === 'ja' ? 'en' : 'ja')}</span></p></div><button class="print-button" data-print hidden><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 9V3h12v6M6 18H3V9h18v9h-3M6 14h12v7H6z" /></svg>{t.print}</button></div>
+  <div class="cv-content">
+    {data.profile.affiliations.length > 0 && <section class="cv-section" aria-labelledby="cv-affiliation"><h2 id="cv-affiliation">{t.affiliation}</h2><div>{data.profile.affiliations.map((item) => <div class="cv-affiliation"><p class="history-organization"><Localized value={item.organization} lang={lang} /></p>{item.department && <p><Localized value={item.department} lang={lang} /></p>}{item.position && <p><Localized value={item.position} lang={lang} /></p>}</div>)}<ProfileLinks compact /></div></section>}
+    {data.researchAreas.length > 0 && <section class="cv-section" aria-labelledby="cv-areas"><h2 id="cv-areas">{t.researchAreas}</h2><ul class="cv-areas">{data.researchAreas.map((item) => <li><Localized value={item.field} lang={lang} /></li>)}</ul></section>}
+    {data.experience.length > 0 && <section class="cv-section" aria-labelledby="cv-experience"><h2 id="cv-experience">{t.experience}</h2><HistoryList items={data.experience} lang={lang} category="experience" /></section>}
+    {data.education.length > 0 && <section class="cv-section" aria-labelledby="cv-education"><h2 id="cv-education">{t.education}</h2><HistoryList items={data.education} lang={lang} category="education" /></section>}
+    {groups.map((group) => <section class="cv-section cv-outputs" aria-labelledby={group.id}><h2 id={group.id}>{group.title}</h2><ol class="output-list">{group.entries.map((item) => <PublicationEntry item={item} lang={lang} />)}</ol></section>)}
+    {data.presentations.length > 0 && <section class="cv-section cv-outputs" aria-labelledby="cv-presentations"><h2 id="cv-presentations">{t.presentations}</h2><ol class="output-list">{data.presentations.map((item) => <PresentationEntry item={item} lang={lang} />)}</ol></section>}
+  </div>
+</SiteLayout>
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-print]').forEach((button) => {
+    button.hidden = false;
+    button.addEventListener('click', () => window.print());
+  });
+</script>

@@ -1,0 +1,17 @@
+---
+import type { History, Locale } from '../data/schema';
+import { formatPeriod } from '../lib/i18n';
+import Localized from './Localized.astro';
+interface Props { items: History[]; lang: Locale; category: 'education' | 'experience' }
+const { items, lang, category } = Astro.props;
+---
+<dl class="history-list">
+  {items.map((item) => <div class="history-row" data-record={category}>
+    <dt>{formatPeriod(item.start, item.end, lang)}</dt>
+    <dd>
+      <p class="history-organization"><Localized value={item.organization} lang={lang} /></p>
+      {item.department && <p><Localized value={item.department} lang={lang} /></p>}
+      {item.course && <p><Localized value={item.course} lang={lang} /></p>}
+    </dd>
+  </div>)}
+</dl>

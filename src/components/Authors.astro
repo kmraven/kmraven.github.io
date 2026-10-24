@@ -1,0 +1,13 @@
+---
+import type { Locale, LocalizedAuthors } from '../data/schema';
+import { data } from '../data';
+import { authorNames, fullName } from '../lib/i18n';
+interface Props { value: LocalizedAuthors; lang: Locale }
+const { value, lang } = Astro.props;
+const result = authorNames(value, lang);
+const normalize = (name: string) => name.replace(/\s/g, '').toLowerCase();
+const selfNames = [normalize(fullName(data.profile, 'ja')), normalize(fullName(data.profile, 'en'))];
+---
+<p class="authors" lang={result.lang}>
+  {result.names.map((name, index) => <>{index > 0 && ', '}{selfNames.includes(normalize(name)) ? <strong>{name}</strong> : name}</>)}
+</p>

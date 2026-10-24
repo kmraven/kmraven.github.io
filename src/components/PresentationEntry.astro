@@ -1,0 +1,19 @@
+---
+import type { Locale, Presentation } from '../data/schema';
+import { copy, formatDate } from '../lib/i18n';
+import Authors from './Authors.astro';
+import Localized from './Localized.astro';
+interface Props { item: Presentation; lang: Locale }
+const { item, lang } = Astro.props;
+---
+<li class="output-entry" data-record="presentation">
+  <article>
+    <div class="entry-meta">
+      {item.date && <time datetime={item.date}>{formatDate(item.date, lang)}</time>}
+      <span>{copy[lang][item.type]}</span>
+    </div>
+    <h3 class="entry-title"><Localized value={item.title} lang={lang} /></h3>
+    <Authors value={item.authors} lang={lang} />
+    {item.event && <p class="venue"><Localized value={item.event} lang={lang} /></p>}
+  </article>
+</li>

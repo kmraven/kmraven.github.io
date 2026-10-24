@@ -1,0 +1,24 @@
+---
+import type { Locale, Publication } from '../data/schema';
+import { copy, formatDate, localize } from '../lib/i18n';
+import Authors from './Authors.astro';
+import Localized from './Localized.astro';
+interface Props { item: Publication; lang: Locale; showAbstract?: boolean }
+const { item, lang, showAbstract = false } = Astro.props;
+const t = copy[lang];
+---
+<li class="output-entry" data-record="publication" data-kind={item.kind}>
+  <article>
+    <div class="entry-meta">
+      {item.date && <time datetime={item.date}>{formatDate(item.date, lang)}</time>}
+      {item.kind === 'preprint' && <span class="quiet-tag">{t.preprints}</span>}
+    </div>
+    <h3 class="entry-title"><Localized value={item.title} lang={lang} /></h3>
+    <Authors value={item.authors} lang={lang} />
+    {item.venue && <p class="venue"><Localized value={item.venue} lang={lang} /></p>}
+    {item.links.length > 0 && <ul class="resource-links" aria-label={t.links}>
+      {item.links.map((link) => <li><a href={link.url} aria-label={`${link.label}: ${localize(item.title, lang)}`}>{link.label}<span aria-hidden="true">↗</span></a></li>)}
+    </ul>}
+    {showAbstract && item.abstract && <details class="abstract"><summary>{t.abstract}</summary><p><Localized value={item.abstract} lang={lang} /></p></details>}
+  </article>
+</li>
