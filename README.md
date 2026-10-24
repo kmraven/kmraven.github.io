@@ -4,6 +4,8 @@
 
 公開先: https://kmraven.github.io/
 
+**現在は公開を一時停止しています。** GitHub PagesをUnpublishし、ワークフローの公開ジョブも無効にしています。`main`へのpushでは検証とビルドだけが実行されます。
+
 ## ローカルで開く
 
 Node.js **24.x** とnpmを使用します。`.nvmrc` にも指定しています。
@@ -65,6 +67,8 @@ GitHubプロフィールのURLは `src/data/index.ts` で管理します。氏�
 CVの「印刷」ボタンかブラウザの印刷機能で、A4用の印刷レイアウトを利用できます。専用のPDF生成処理は含めていません。
 
 ## GitHub Pagesに公開する
+
+公開を再開するときは、`.github/workflows/deploy.yml` の `deploy.if` を `github.event_name != 'pull_request'` に戻してpushします。以下は公開を有効にした場合の動作です。
 
 1. `kmraven/kmraven.github.io` リポジトリを使用します。公開用データとソースだけをpushします。
 2. GitHubの **Settings → Pages → Build and deployment → Source** を **GitHub Actions** にします。

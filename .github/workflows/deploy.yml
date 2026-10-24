@@ -30,7 +30,8 @@ jobs:
           build-cmd: npm run verify
 
   deploy:
-    if: github.event_name != 'pull_request'
+    # Publication is paused. Restore the event condition when resuming.
+    if: ${{ false }}
     needs: build
     runs-on: ubuntu-latest
     permissions:
