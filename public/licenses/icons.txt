@@ -1,0 +1,16 @@
+Brand icons: Font Awesome Free 7.3.1 by Fonticons, Inc.
+Source: https://github.com/FortAwesome/Font-Awesome/tree/7.3.1/svgs/brands
+License: CC BY 4.0 — https://creativecommons.org/licenses/by/4.0/
+See font-awesome.txt in this directory for the upstream license notice.
+Only SVG path data and viewBox values are retained; paths are unchanged.
+Displayed at the site's sizes in a single color.
+
+researchmap wordmark:
+Source: https://guide.researchmap.jp/resources/assets/researchmap_log.png
+Retrieved from the official researchmap guide on 2026-10-24.
+The source image is unchanged; the site displays it in grayscale.
+
+Brand marks belong to their respective owners and identify links to their
+services. ORCID and the iD logo are trademarks of ORCID, Inc.
+
+Document, code, external-link and printer outlines are drawn for this site.

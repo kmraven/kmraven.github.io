@@ -1,9 +1,42 @@
 ---
-import { profileLinks } from '../data';
-import Arrow from './Arrow.astro';
-interface Props { compact?: boolean }
-const { compact = false } = Astro.props;
+import { getEntry } from 'astro:content';
+import { data } from '../data';
+import icons from '../data/brand-icons.json';
+import BrandIcon from './BrandIcon.astro';
+import ActionIcon from './ActionIcon.astro';
+interface Props { compact?: boolean; cvHref?: string }
+const { compact = false, cvHref } = Astro.props;
+const profile = await getEntry('profile', 'profile');
+const profileLinks = [
+  ...data.profile.links,
+  { label: 'GitHub', url: profile?.data.links.github },
+  { label: 'X', url: profile?.data.links.x },
+  { label: 'LinkedIn', url: profile?.data.links.linkedin },
+  { label: 'Google Scholar', url: profile?.data.links.google_scholar },
+].filter((link) => link.url);
+const brandName = (label: string) => Object.hasOwn(icons, label) ? label as keyof typeof icons : undefined;
 ---
 <ul class:list={['profile-links', { compact }]}>
-  {profileLinks.map((link) => <li><a href={link.url}><span>{link.label}</span><Arrow /></a></li>)}
+  {profileLinks.map((link) => {
+    const brand = brandName(link.label);
+    const wordmark = link.label === 'researchmap';
+    return <li><a class:list={['profile-link', { 'profile-wordmark-link': wordmark }]} href={link.url} aria-label={link.label} data-profile-tooltip>
+      {wordmark && <img class="researchmap-wordmark" src="/icons/researchmap.png" width="100" height="12" alt="" />}
+      {brand && <BrandIcon name={brand} />}
+      <span class:list={['profile-link-label', { 'sr-only': wordmark || brand }]}>{link.label}</span>
+      <span class="link-tooltip" aria-hidden="true">{link.label}</span>
+    </a></li>;
+  })}
+  {cvHref && <li><a class="profile-link profile-cv-link" href={cvHref}><ActionIcon name="document" />CV</a></li>}
 </ul>
+<script>
+  const links = document.querySelectorAll<HTMLAnchorElement>('[data-profile-tooltip]');
+  links.forEach((link) => {
+    const reset = () => link.removeAttribute('data-tooltip-dismissed');
+    link.addEventListener('pointerenter', reset);
+    link.addEventListener('focus', reset);
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') links.forEach((link) => link.setAttribute('data-tooltip-dismissed', ''));
+  });
+</script>

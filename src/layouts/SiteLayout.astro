@@ -16,7 +16,7 @@ const name = fullName(data.profile, 'en');
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light" />
-    <meta name="theme-color" content="#142d42" />
+    <meta name="theme-color" content="#ffffff" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
@@ -38,10 +38,10 @@ const name = fullName(data.profile, 'en');
     <a class="skip-link" href="#main">{t.skip}</a>
     <header class="site-header">
       <div class="header-inner">
-        <a class="brand" href={pagePath('home', lang)} aria-label={`${name} — ${t.home}`}><span class="brand-mark" aria-hidden="true">rk<span>.</span></span><span class="brand-name">{name}</span></a>
+        <a class="brand" href={pagePath('home', lang)} aria-label={`${name} — ${t.home}`}>{name}</a>
         <div class="header-navigation">
           <nav aria-label={t.navigation}>
-            <ul class="nav-links">{(['home', 'publications', 'cv'] as const).map((key) => <li><a href={pagePath(key, lang)} aria-current={page === key ? 'page' : undefined}>{t[key]}</a></li>)}</ul>
+            <ul class="nav-links">{(['home', 'cv'] as const).map((key) => <li><a href={pagePath(key, lang)} aria-current={page === key ? 'page' : undefined}>{t[key]}</a></li>)}</ul>
           </nav>
           <div class="language-switch" aria-label={lang === 'ja' ? '言語' : 'Language'}>
             <span aria-current="true" lang={lang}>{lang.toUpperCase()}</span><span class="language-divider" aria-hidden="true">/</span><a href={pagePath(page, otherLang)} lang={otherLang} hreflang={otherLang} aria-label={otherLang === 'en' ? 'English version' : '日本語版'}>{otherLang.toUpperCase()}</a>
@@ -50,8 +50,5 @@ const name = fullName(data.profile, 'en');
       </div>
     </header>
     <main id="main" class="site-main" tabindex="-1"><slot /></main>
-    <footer class="site-footer">
-      <div class="footer-inner"><span>{name}</span><a href={data.profile.links.find((link) => link.label === 'researchmap')?.url}>researchmap <span aria-hidden="true">↗</span></a></div>
-    </footer>
   </body>
 </html>

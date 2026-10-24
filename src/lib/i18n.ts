@@ -1,7 +1,7 @@
 import type { Locale, LocalizedText, LocalizedAuthors, Profile } from '../data/schema.ts';
 
-export type PageKey = 'home' | 'publications' | 'cv';
-export const pagePaths: Record<PageKey, string> = { home: '', publications: 'publications/', cv: 'cv/' };
+export type PageKey = 'home' | 'cv';
+export const pagePaths: Record<PageKey, string> = { home: '', cv: 'cv/' };
 export function pagePath(page: PageKey, lang: Locale): string {
   return `${lang === 'en' ? '/en/' : '/'}${pagePaths[page]}`;
 }

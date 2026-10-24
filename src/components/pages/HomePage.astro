@@ -1,41 +1,46 @@
 ---
 import { getEntry, render } from 'astro:content';
+import { Image } from 'astro:assets';
 import SiteLayout from '../../layouts/SiteLayout.astro';
 import { data } from '../../data';
 import type { Locale } from '../../data/schema';
 import { copy, fullName, pagePath, hasResearchContent, pageDescription } from '../../lib/i18n';
 import Localized from '../Localized.astro';
+import Affiliations from '../Affiliations.astro';
+import PublicationsSection from '../PublicationsSection.astro';
 import ProfileLinks from '../ProfileLinks.astro';
-import PublicationEntry from '../PublicationEntry.astro';
-import Arrow from '../Arrow.astro';
 interface Props { lang: Locale }
 const { lang } = Astro.props;
 const t = copy[lang];
 const name = fullName(data.profile, lang);
 const secondaryName = fullName(data.profile, lang === 'ja' ? 'en' : 'ja');
+const profile = await getEntry('profile', 'profile');
+const photo = profile?.data.photo;
+const about = await getEntry('about', lang);
+const renderedAbout = about && hasResearchContent(about.data.published, about.body) ? await render(about) : undefined;
+const AboutContent = renderedAbout?.Content;
 const research = await getEntry('research', lang);
 const showResearch = hasResearchContent(research?.data.published, research?.body);
 const rendered = showResearch && research ? await render(research) : undefined;
 const ResearchContent = rendered?.Content;
 ---
 <SiteLayout lang={lang} page="home" title={`${name} | ${t.profile}`} description={pageDescription('home', lang, name)}>
-  <section class="home-hero" aria-labelledby="profile-name">
-    <div class="hero-introduction">
-      <p class="eyebrow">{t.profile}</p>
-      <h1 id="profile-name" class:list={['hero-name', { 'name-ja': lang === 'ja' }]}>{name}</h1>
+  <section class:list={['profile', { 'has-photo': photo }]} aria-labelledby="profile-name">
+    {photo && <Image src={photo} alt={lang === 'ja' ? `${name}のプロフィール写真` : `Portrait of ${name}`} class="profile-photo" width={152} widths={[96, 192, 304]} sizes="(max-width: 600px) 88px, 152px" format="webp" loading="eager" />}
+    <div class="profile-names">
+      <h1 id="profile-name">{name}</h1>
       <p class="secondary-name" lang={lang === 'ja' ? 'en' : 'ja'}>{secondaryName}</p>
-      <div class="hero-affiliations">
-        {data.profile.affiliations.map((entry) => <div class="affiliation-block">
-          <p class="organization"><Localized value={entry.organization} lang={lang} /></p>
-          {entry.department && <p><Localized value={entry.department} lang={lang} /></p>}
-          {entry.position && <p><Localized value={entry.position} lang={lang} /></p>}
-        </div>)}
-      </div>
-      <a class="text-link hero-cv" href={pagePath('cv', lang)}>{t.cvLink}<span aria-hidden="true">→</span></a>
     </div>
-    <aside class="hero-aside" aria-labelledby="elsewhere-title"><h2 class="eyebrow" id="elsewhere-title">{t.externalProfiles}</h2><ProfileLinks /></aside>
+    <div class="profile-affiliations">
+      <Affiliations lang={lang} />
+    </div>
+    {data.researchAreas.length > 0 && <div class="profile-research">
+      <h2 id="areas-title">{t.researchAreas}</h2>
+      <ul class="area-list" aria-labelledby="areas-title">{data.researchAreas.map((area) => <li><Localized value={area.field} lang={lang} /></li>)}</ul>
+    </div>}
+    <nav aria-label={t.moreProfile}><ProfileLinks cvHref={pagePath('cv', lang)} /></nav>
+    {AboutContent && <div class="profile-bio prose"><AboutContent /></div>}
   </section>
-  {data.researchAreas.length > 0 && <section class="areas-section" aria-labelledby="areas-title"><h2 class="section-label" id="areas-title">{t.researchAreas}</h2><ul class="area-list">{data.researchAreas.map((area) => <li><Localized value={area.field} lang={lang} />{area.discipline && <span class="area-discipline"><Localized value={area.discipline} lang={lang} /></span>}</li>)}</ul></section>}
   {ResearchContent && research && <section class="content-section research-section" aria-labelledby="research-title"><div class="section-heading"><h2 id="research-title">{research.data.title}</h2></div><div class="prose"><ResearchContent /></div></section>}
-  {data.publications.length > 0 && <section class="content-section" aria-labelledby="latest-title"><div class="section-heading"><h2 id="latest-title">{t.latest}</h2><a class="text-link" href={pagePath('publications', lang)}>{t.viewAll}<Arrow /></a></div><ol class="output-list home-outputs">{data.publications.slice(0, 3).map((item) => <PublicationEntry item={item} lang={lang} />)}</ol></section>}
+  {(data.publications.length > 0 || data.presentations.length > 0) && <PublicationsSection lang={lang} />}
 </SiteLayout>

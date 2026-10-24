@@ -1,17 +1,30 @@
 ---
+import { getEntry } from 'astro:content';
 import type { History, Locale } from '../data/schema';
 import { formatPeriod } from '../lib/i18n';
+import { historySupplement } from '../lib/history-supplements';
 import Localized from './Localized.astro';
-interface Props { items: History[]; lang: Locale; category: 'education' | 'experience' }
-const { items, lang, category } = Astro.props;
+import LabLink from './LabLink.astro';
+interface Props { items: History[]; lang: Locale; category: 'education' | 'experience'; manualItems?: History[] }
+const { items, lang, category, manualItems = [] } = Astro.props;
+const history = await getEntry('history', 'history');
+const additional = manualItems.filter((manual) => !items.some((item) =>
+  Object.values(item.organization).some((name) => Object.values(manual.organization).includes(name))
+));
+const rows = [
+  ...items.map((item) => ({ item, record: category })),
+  ...additional.map((item) => ({ item, record: `manual-${category}` })),
+].sort((a, b) => (b.item.start ?? '').localeCompare(a.item.start ?? ''));
+
 ---
 <dl class="history-list">
-  {items.map((item) => <div class="history-row" data-record={category}>
+  {rows.map(({ item, record }) => <div class="history-row" data-record={record}>
     <dt>{formatPeriod(item.start, item.end, lang)}</dt>
     <dd>
       <p class="history-organization"><Localized value={item.organization} lang={lang} /></p>
       {item.department && <p><Localized value={item.department} lang={lang} /></p>}
       {item.course && <p><Localized value={item.course} lang={lang} /></p>}
+      <LabLink lab={historySupplement(item, category, history?.data.entries ?? [])?.lab} lang={lang} />
     </dd>
   </div>)}
 </dl>

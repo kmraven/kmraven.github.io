@@ -3,8 +3,9 @@ import type { Locale, Publication } from '../data/schema';
 import { copy, formatDate, localize } from '../lib/i18n';
 import Authors from './Authors.astro';
 import Localized from './Localized.astro';
-interface Props { item: Publication; lang: Locale; showAbstract?: boolean }
-const { item, lang, showAbstract = false } = Astro.props;
+import ActionIcon from './ActionIcon.astro';
+interface Props { item: Publication; lang: Locale; heading?: 'h3' | 'h4'; showAbstract?: boolean }
+const { item, lang, heading: Heading = 'h3', showAbstract = false } = Astro.props;
 const t = copy[lang];
 ---
 <li class="output-entry" data-record="publication" data-kind={item.kind}>
@@ -13,11 +14,11 @@ const t = copy[lang];
       {item.date && <time datetime={item.date}>{formatDate(item.date, lang)}</time>}
       {item.kind === 'preprint' && <span class="quiet-tag">{t.preprints}</span>}
     </div>
-    <h3 class="entry-title"><Localized value={item.title} lang={lang} /></h3>
+    <Heading class="entry-title"><Localized value={item.title} lang={lang} /></Heading>
     <Authors value={item.authors} lang={lang} />
     {item.venue && <p class="venue"><Localized value={item.venue} lang={lang} /></p>}
     {item.links.length > 0 && <ul class="resource-links" aria-label={t.links}>
-      {item.links.map((link) => <li><a href={link.url} aria-label={`${link.label}: ${localize(item.title, lang)}`}>{link.label}<span aria-hidden="true">↗</span></a></li>)}
+      {item.links.map((link) => <li><a href={link.url} aria-label={`${link.label}: ${localize(item.title, lang)}`}><ActionIcon name={link.label === 'PDF' ? 'document' : link.label === 'Code' ? 'code' : 'external'} />{link.label}</a></li>)}
     </ul>}
     {showAbstract && item.abstract && <details class="abstract"><summary>{t.abstract}</summary><p><Localized value={item.abstract} lang={lang} /></p></details>}
   </article>

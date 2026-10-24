@@ -1,0 +1,20 @@
+---
+import { data } from '../data';
+import type { Locale } from '../data/schema';
+import { copy } from '../lib/i18n';
+import PublicationEntry from './PublicationEntry.astro';
+import PresentationEntry from './PresentationEntry.astro';
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const t = copy[lang];
+const groups = [
+  { id: 'papers', title: t.papers, entries: data.publications.filter((item) => item.kind === 'paper') },
+  { id: 'preprints', title: t.preprints, entries: data.publications.filter((item) => item.kind === 'preprint') },
+].filter((group) => group.entries.length);
+---
+<section class="home-publications" aria-labelledby="publications">
+  <h2 id="publications">{t.publicationsTitle}</h2>
+  <nav class="section-navigation" aria-label={lang === 'ja' ? '業績の種類' : 'Publication categories'}><ul>{groups.map((group) => <li><a href={`#${group.id}`}>{group.title}<span>{group.entries.length}</span></a></li>)}{data.presentations.length > 0 && <li><a href="#presentations">{t.presentations}<span>{data.presentations.length}</span></a></li>}</ul></nav>
+  {groups.map((group) => <section class="publication-group" aria-labelledby={group.id}><div class="section-heading"><h3 id={group.id}>{group.title}</h3></div><ol class="output-list">{group.entries.map((item) => <PublicationEntry item={item} lang={lang} heading="h4" showAbstract />)}</ol></section>)}
+  {data.presentations.length > 0 && <section class="publication-group" aria-labelledby="presentations"><div class="section-heading"><h3 id="presentations">{t.presentations}</h3></div><ol class="output-list">{data.presentations.map((item) => <PresentationEntry item={item} lang={lang} heading="h4" />)}</ol></section>}
+</section>

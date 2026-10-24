@@ -21,7 +21,7 @@ test('formats names and dates with the original precision', () => {
 test('language links preserve the current page', () => {
   assert.equal(pagePath('home', 'ja'), '/');
   assert.equal(pagePath('home', 'en'), '/en/');
-  assert.equal(pagePath('publications', 'en'), '/en/publications/');
+  assert.equal(pagePath('cv', 'en'), '/en/cv/');
   assert.equal(pagePath('cv', 'ja'), '/cv/');
 });
 test('unpublished or empty research introductions stay hidden', () => {

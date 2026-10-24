@@ -1,0 +1,10 @@
+---
+import type { Locale } from '../data/schema';
+import type { HistorySupplement } from '../lib/history-supplements';
+import Localized from './Localized.astro';
+interface Props { lab?: HistorySupplement['lab']; lang: Locale }
+const { lab, lang } = Astro.props;
+---
+{lab && (lab.name.ja || lab.name.en) && <p class="profile-lab">
+  {lab.url ? <a href={lab.url}><Localized value={lab.name} lang={lang} /></a> : <Localized value={lab.name} lang={lang} />}
+</p>}

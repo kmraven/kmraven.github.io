@@ -1,0 +1,19 @@
+---
+import { getEntry } from 'astro:content';
+import { data } from '../data';
+import type { Locale } from '../data/schema';
+import Localized from './Localized.astro';
+import LabLink from './LabLink.astro';
+import { currentLab } from '../lib/history-supplements';
+interface Props { lang: Locale; compact?: boolean }
+const { lang, compact = false } = Astro.props;
+const profile = await getEntry('profile', 'profile');
+const history = await getEntry('history', 'history');
+const lab = currentLab(profile?.data.current_lab, history?.data.entries ?? [], data);
+---
+{data.profile.affiliations.map((entry) => <div class={compact ? 'cv-affiliation' : 'affiliation-block'}>
+  <p class={compact ? 'history-organization' : 'organization'}><Localized value={entry.organization} lang={lang} /></p>
+  {entry.department && <p><Localized value={entry.department} lang={lang} /></p>}
+  {entry.position && <p><Localized value={entry.position} lang={lang} /></p>}
+</div>)}
+<LabLink lab={lab} lang={lang} />

@@ -13,7 +13,7 @@ const data = publicDataSchema.parse(JSON.parse(await readFile(path.join(root, 's
 const pages = new Map<string, string>();
 const fileFor = (pathname: string) => path.join(dist, pathname.endsWith('/') ? `${pathname}index.html` : pathname);
 for (const lang of ['ja', 'en'] as const) {
-  for (const page of ['home', 'publications', 'cv'] as const) {
+  for (const page of ['home', 'cv'] as const) {
     const route = pagePath(page, lang);
     const html = await readFile(fileFor(route), 'utf8');
     pages.set(route, html);
@@ -26,10 +26,11 @@ for (const lang of ['ja', 'en'] as const) {
     assert(html.includes(`hreflang="${other}" href="${origin}${pagePath(page, other)}"`), `Wrong alternate: ${route}`);
     assert(html.includes(`href="${pagePath(page, other)}" lang="${other}"`), `Language switch loses page: ${route}`);
     assert(!/user_id|display_erad_id|affiliation_type|effort_rate|PRIVATE_TEST/.test(html), `Internal fields leaked: ${route}`);
-    if (page === 'publications' || page === 'cv') {
+    if (page === 'home' || page === 'cv') {
       assert.equal((html.match(/data-record="publication"/g) ?? []).length, data.publications.length, `Paper count mismatch: ${route}`);
       assert.equal((html.match(/data-record="presentation"/g) ?? []).length, data.presentations.length, `Presentation count mismatch: ${route}`);
     }
+    assert(!html.includes('href="/publications/') && !html.includes('href="/en/publications/'), `Obsolete page link: ${route}`);
     if (page === 'cv') {
       assert.equal((html.match(/data-record="education"/g) ?? []).length, data.education.length, `Education count mismatch: ${route}`);
       assert.equal((html.match(/data-record="experience"/g) ?? []).length, data.experience.length, `Experience count mismatch: ${route}`);
