@@ -10,7 +10,7 @@
 | [about/ja.md](about/ja.md) / [about/en.md](about/en.md) | 2〜4文程度の短い自己紹介 | 各言語のホームのプロフィール末尾 |
 | [research/ja.md](research/ja.md) / [research/en.md](research/en.md) | 研究の問い・手法・意義、プロジェクトやデモの紹介 | 各言語のホームの研究紹介欄 |
 | [career/ja.md](career/ja.md) / [career/en.md](career/en.md) | researchmap以外で管理する研究・実務経験 | CV |
-| [music/ja.md](music/ja.md) / [music/en.md](music/en.md) | Musicページの本文・タイトルとApple MusicプロフィールのURL（`apple_music`） | 各言語のMusic |
+| [misc/ja.md](misc/ja.md) / [misc/en.md](misc/en.md) | Misc.ページの本文・タイトルとApple MusicプロフィールのURL（`apple_music`） | 各言語のMisc. |
 | `images/` | プロフィール写真、研究紹介の図 | 各Markdownから参照した場所 |
 
 ## メタデータの編集

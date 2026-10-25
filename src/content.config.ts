@@ -68,9 +68,9 @@ const education = defineCollection({
   schema: z.strictObject({ entries: z.array(historySchema) }),
 });
 
-const music = defineCollection({
-  loader: glob({ pattern: '{ja,en}.md', base: './content/music' }),
+const misc = defineCollection({
+  loader: glob({ pattern: '{ja,en}.md', base: './content/misc' }),
   schema: z.strictObject({ title: z.string(), apple_music: profileUrl }),
 });
 
-export const collections = { research, about, profile, history, career, education, music };
+export const collections = { research, about, profile, history, career, education, misc };

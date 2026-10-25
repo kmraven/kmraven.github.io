@@ -1,0 +1,19 @@
+---
+import { getEntry, render } from 'astro:content';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { data } from '../../data';
+import type { Locale } from '../../data/schema';
+import { fullName, pageDescription } from '../../lib/i18n';
+import ActionIcon from '../ActionIcon.astro';
+import BrandIcon from '../BrandIcon.astro';
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const entry = await getEntry('misc', lang);
+if (!entry) throw new Error(`Missing Misc. content: ${lang}`);
+const { Content } = await render(entry);
+---
+<SiteLayout lang={lang} page="misc" title={`${entry.data.title} | ${fullName(data.profile, lang)}`} description={pageDescription('misc', lang, fullName(data.profile, lang))}>
+  <div class="page-heading"><h1 class="misc-title"><ActionIcon name="music" size={28} />{entry.data.title}</h1></div>
+  <div class="prose misc-prose"><Content /></div>
+  {entry.data.apple_music && <a class="misc-profile-link" href={entry.data.apple_music}><BrandIcon name="Apple" size={23} /><span>Apple Music</span><ActionIcon name="external" size={14} /></a>}
+</SiteLayout>
