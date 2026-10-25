@@ -55,7 +55,7 @@ const name = fullName(data.profile, 'en');
           <nav aria-label={t.navigation}>
             <ul class="nav-links">{(['home', 'cv', 'misc'] as const).map((key) => <li>
               <a href={pagePath(key, lang)} aria-current={page === key ? 'page' : undefined} aria-label={key === 'misc' ? t[key] : undefined} title={key === 'misc' ? t[key] : undefined} class:list={[{ 'nav-icon-link': key === 'misc' }]}>
-                {key === 'misc' ? <ActionIcon name="music" size={18} /> : t[key]}
+                {key === 'misc' ? <ActionIcon name="grid" size={18} /> : t[key]}
               </a>
             </li>)}</ul>
           </nav>

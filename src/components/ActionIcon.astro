@@ -1,12 +1,12 @@
 ---
-interface Props { name: 'document' | 'code' | 'external' | 'print' | 'music'; size?: number }
+interface Props { name: 'document' | 'code' | 'external' | 'print' | 'grid'; size?: number }
 const { name, size = 16 } = Astro.props;
 const paths = {
   document: ['M13 3H6v18h12V8l-5-5Z', 'M13 3v5h5M9 12h6M9 16h6'],
   code: ['m8 6-6 6 6 6M16 6l6 6-6 6M14 4l-4 16'],
   external: ['M14 3h7v7M21 3l-9 9', 'M10 5H4v15h15v-6'],
   print: ['M6 9V3h12v6M6 18H3V9h18v9h-3M6 14h12v7H6Z'],
-  music: ['M9 17V5l12-2v12M9 9l12-2', 'M9 17c0 1.66-1.34 3-3 3s-3-1.12-3-2.5S4.34 15 6 15s3 .34 3 2Zm12-2c0 1.66-1.34 3-3 3s-3-1.12-3-2.5 1.34-2.5 3-2.5 3 .34 3 2Z'],
+  grid: ['M3 3h7v7H3ZM14 3h7v7h-7ZM3 14h7v7H3ZM14 14h7v7h-7Z'],
 };
 ---
 <svg class="action-icon" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">

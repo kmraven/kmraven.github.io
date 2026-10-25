@@ -54,10 +54,7 @@ const sitemap = await readFile(path.join(dist, 'sitemap-0.xml'), 'utf8');
 for (const route of pages.keys()) assert(sitemap.includes(`<loc>${origin}${route}</loc>`), `Missing sitemap route: ${route}`);
 for (const lang of ['ja', 'en'] as const) {
   const oldRoute = lang === 'ja' ? '/music/' : '/en/music/';
-  const destination = pagePath('misc', lang);
-  const redirect = await readFile(fileFor(oldRoute), 'utf8');
-  assert(redirect.includes(`http-equiv="refresh" content="0;url=${destination}"`), `Wrong legacy redirect: ${oldRoute}`);
-  assert(redirect.includes(`rel="canonical" href="${origin}${destination}"`));
+  await assert.rejects(access(fileFor(oldRoute)), { code: 'ENOENT' }, `Removed route still generated: ${oldRoute}`);
   assert(!sitemap.includes(`<loc>${origin}${oldRoute}</loc>`), `Legacy route in sitemap: ${oldRoute}`);
 }
 const tracked = spawnSync('git', ['ls-files', '-z'], { cwd: root, encoding: 'utf8' });
