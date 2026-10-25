@@ -13,7 +13,7 @@ const data = publicDataSchema.parse(JSON.parse(await readFile(path.join(root, 's
 const pages = new Map<string, string>();
 const fileFor = (pathname: string) => path.join(dist, pathname.endsWith('/') ? `${pathname}index.html` : pathname);
 for (const lang of ['ja', 'en'] as const) {
-  for (const page of ['home', 'cv'] as const) {
+  for (const page of ['home', 'cv', 'music'] as const) {
     const route = pagePath(page, lang);
     const html = await readFile(fileFor(route), 'utf8');
     pages.set(route, html);

@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import ThemeToggle from '../components/ThemeToggle.astro';
+import ActionIcon from '../components/ActionIcon.astro';
 import { data } from '../data';
 import type { Locale } from '../data/schema';
 import { copy, fullName, pagePath, type PageKey } from '../lib/i18n';
@@ -52,7 +53,7 @@ const name = fullName(data.profile, 'en');
         <a class="brand" href={pagePath('home', lang)} aria-label={`${name} — ${t.home}`}>{name}</a>
         <div class="header-navigation">
           <nav aria-label={t.navigation}>
-            <ul class="nav-links">{(['home', 'cv'] as const).map((key) => <li><a href={pagePath(key, lang)} aria-current={page === key ? 'page' : undefined}>{t[key]}</a></li>)}</ul>
+            <ul class="nav-links">{(['home', 'cv', 'music'] as const).map((key) => <li><a href={pagePath(key, lang)} aria-current={page === key ? 'page' : undefined}>{key === 'music' && <ActionIcon name="music" size={15} />}{t[key]}</a></li>)}</ul>
           </nav>
           <div class="header-tools">
             <div class="language-switch" aria-label={lang === 'ja' ? '言語' : 'Language'}>

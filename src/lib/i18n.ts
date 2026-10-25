@@ -1,7 +1,7 @@
 import type { Locale, LocalizedText, LocalizedAuthors, Profile } from '../data/schema.ts';
 
-export type PageKey = 'home' | 'cv';
-export const pagePaths: Record<PageKey, string> = { home: '', cv: 'cv/' };
+export type PageKey = 'home' | 'cv' | 'music';
+export const pagePaths: Record<PageKey, string> = { home: '', cv: 'cv/', music: 'music/' };
 export function pagePath(page: PageKey, lang: Locale): string {
   return `${lang === 'en' ? '/en/' : '/'}${pagePaths[page]}`;
 }
@@ -52,7 +52,7 @@ export function pageDescription(page: PageKey, lang: Locale, name: string): stri
 
 export const copy = {
   ja: {
-    home: 'ホーム', publications: '業績', cv: 'CV', skip: '本文へ移動', navigation: 'メインナビゲーション',
+    home: 'ホーム', publications: '業績', cv: 'CV', music: 'Music', skip: '本文へ移動', navigation: 'メインナビゲーション',
     profile: '研究者プロフィール', externalProfiles: '外部プロフィール', links: 'リンク',
     researchAreas: '研究分野', latest: '最近の論文・プレプリント', viewAll: 'すべての業績',
     publicationsTitle: '研究業績', publicationsSubtitle: '論文・プレプリントと学会発表の一覧。',
@@ -64,10 +64,11 @@ export const copy = {
     homeDescription: '研究者プロフィール。所属、研究分野、論文・プレプリント、学会発表、CVを掲載しています。',
     publicationsDescription: '研究業績。論文・プレプリント、学会発表と関連資料へのリンク。',
     cvDescription: 'Web CV。公開している所属、経歴、学歴、研究分野と研究業績。',
+    musicDescription: 'Musicページ（WIP）。Apple Musicのプロフィールへのリンク。',
     printNote: '印刷用のレイアウトに対応しています。',
   },
   en: {
-    home: 'Home', publications: 'Publications', cv: 'CV', skip: 'Skip to content', navigation: 'Main navigation',
+    home: 'Home', publications: 'Publications', cv: 'CV', music: 'Music', skip: 'Skip to content', navigation: 'Main navigation',
     profile: 'Research profile', externalProfiles: 'Elsewhere', links: 'Links',
     researchAreas: 'Research areas', latest: 'Recent papers & preprints', viewAll: 'All publications',
     publicationsTitle: 'Publications', publicationsSubtitle: 'Papers, preprints, and conference presentations.',
@@ -79,6 +80,7 @@ export const copy = {
     homeDescription: 'Research profile, affiliation, research areas, papers, preprints, conference presentations, and curriculum vitae.',
     publicationsDescription: 'Papers, preprints, and conference presentations, with links to related resources.',
     cvDescription: 'Academic curriculum vitae: affiliation, experience, education, research areas, and research outputs.',
+    musicDescription: 'Music page (WIP), with a link to my Apple Music profile.',
     printNote: 'A print layout is available.',
   },
 } as const;

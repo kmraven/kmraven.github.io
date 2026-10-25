@@ -23,6 +23,8 @@ test('language links preserve the current page', () => {
   assert.equal(pagePath('home', 'en'), '/en/');
   assert.equal(pagePath('cv', 'en'), '/en/cv/');
   assert.equal(pagePath('cv', 'ja'), '/cv/');
+  assert.equal(pagePath('music', 'ja'), '/music/');
+  assert.equal(pagePath('music', 'en'), '/en/music/');
 });
 test('unpublished or empty research introductions stay hidden', () => {
   assert.equal(hasResearchContent(false, 'A research introduction'), false);

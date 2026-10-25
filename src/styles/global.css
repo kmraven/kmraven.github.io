@@ -102,7 +102,7 @@
   .brand { color: var(--ink); font-size: 1rem; font-weight: 600; letter-spacing: -.015em; white-space: nowrap; }
   .brand:hover { text-decoration: none; color: var(--accent); }
   .nav-links { display: flex; gap: 24px; list-style: none; }
-  .nav-links a { display: inline-flex; min-height: 44px; align-items: center; font-size: .875rem; color: var(--muted); position: relative; }
+  .nav-links a { display: inline-flex; min-height: 44px; align-items: center; gap: 6px; font-size: .875rem; color: var(--muted); position: relative; }
   .nav-links a[aria-current="page"] { color: var(--ink); font-weight: 600; }
   .nav-links a[aria-current="page"]::after { content: ''; position: absolute; height: 2px; background: var(--accent); bottom: 4px; left: 0; right: 0; }
   .nav-links a:hover { color: var(--ink); text-decoration: none; }
@@ -164,6 +164,11 @@
 
   .page-heading { padding-bottom: 24px; }
   .page-intro { margin-top: 12px; color: var(--muted); font-size: 1rem; }
+  .music-title { display: flex; align-items: center; gap: 14px; }
+  .music-prose { padding-top: 0; color: var(--muted); }
+  .music-profile-link { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; margin-top: 24px; color: var(--body); }
+  .music-profile-link:hover { color: var(--accent); }
+  .music-profile-link > .action-icon { color: var(--muted); }
   .section-navigation ul { list-style: none; display: flex; gap: 12px 28px; flex-wrap: wrap; }
   .section-navigation a { display: inline-flex; align-items: center; min-height: 40px; gap: 8px; font-size: .875rem; }
   .section-navigation a > span { color: var(--muted); font-variant-numeric: tabular-nums; }
