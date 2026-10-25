@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import ThemeToggle from '../components/ThemeToggle.astro';
 import { data } from '../data';
 import type { Locale } from '../data/schema';
 import { copy, fullName, pagePath, type PageKey } from '../lib/i18n';
@@ -15,8 +16,17 @@ const name = fullName(data.profile, 'en');
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="color-scheme" content="light" />
+    <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#ffffff" />
+    <script is:inline>
+      (() => {
+        let theme;
+        try { theme = localStorage.getItem('portal-theme'); } catch { /* Fall back to the system preference. */ }
+        if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
+        const dark = theme === 'dark' || (theme !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        document.querySelector('meta[name="theme-color"]').setAttribute('content', dark ? '#171b20' : '#ffffff');
+      })();
+    </script>
     <meta name="google-site-verification" content="XKzroCfUg23AeUG42OXlQtdklgNaysMT5zr0aRGv_8U" />
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -44,8 +54,11 @@ const name = fullName(data.profile, 'en');
           <nav aria-label={t.navigation}>
             <ul class="nav-links">{(['home', 'cv'] as const).map((key) => <li><a href={pagePath(key, lang)} aria-current={page === key ? 'page' : undefined}>{t[key]}</a></li>)}</ul>
           </nav>
-          <div class="language-switch" aria-label={lang === 'ja' ? '言語' : 'Language'}>
-            <span aria-current="true" lang={lang}>{lang.toUpperCase()}</span><span class="language-divider" aria-hidden="true">/</span><a href={pagePath(page, otherLang)} lang={otherLang} hreflang={otherLang} aria-label={otherLang === 'en' ? 'English version' : '日本語版'}>{otherLang.toUpperCase()}</a>
+          <div class="header-tools">
+            <div class="language-switch" aria-label={lang === 'ja' ? '言語' : 'Language'}>
+              <span aria-current="true" lang={lang}>{lang.toUpperCase()}</span><span class="language-divider" aria-hidden="true">/</span><a href={pagePath(page, otherLang)} lang={otherLang} hreflang={otherLang} aria-label={otherLang === 'en' ? 'English version' : '日本語版'}>{otherLang.toUpperCase()}</a>
+            </div>
+            <ThemeToggle lang={lang} />
           </div>
         </div>
       </div>

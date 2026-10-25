@@ -1,0 +1,51 @@
+---
+import type { Locale } from '../data/schema';
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const lightLabel = lang === 'ja' ? 'ライトテーマに切り替え' : 'Switch to light theme';
+const darkLabel = lang === 'ja' ? 'ダークテーマに切り替え' : 'Switch to dark theme';
+---
+<button class="theme-toggle" type="button" data-theme-toggle data-light-label={lightLabel} data-dark-label={darkLabel} aria-label={darkLabel} hidden>
+  <svg class="theme-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M20.5 13A8.5 8.5 0 0 1 11 3.5 8.5 8.5 0 1 0 20.5 13Z" />
+  </svg>
+  <svg class="theme-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="4" />
+    <path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" />
+  </svg>
+</button>
+
+<script>
+  const root = document.documentElement;
+  const toggle = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+  const systemTheme = window.matchMedia('(prefers-color-scheme: dark)');
+  const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+  const isDark = () => root.dataset.theme === 'dark' || (!root.dataset.theme && systemTheme.matches);
+
+  const sync = () => {
+    const dark = isDark();
+    const label = dark ? toggle?.dataset.lightLabel : toggle?.dataset.darkLabel;
+    if (toggle && label) {
+      toggle.setAttribute('aria-label', label);
+      toggle.title = label;
+      toggle.dataset.dark = String(dark);
+      toggle.hidden = false;
+    }
+    themeColor?.setAttribute('content', dark ? '#171b20' : '#ffffff');
+  };
+
+  toggle?.addEventListener('click', () => {
+    const next = isDark() ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try { localStorage.setItem('portal-theme', next); } catch { /* The toggle still works when storage is unavailable. */ }
+    sync();
+  });
+  systemTheme.addEventListener('change', sync);
+  window.addEventListener('storage', (event) => {
+    if (event.key !== 'portal-theme' && event.key !== null) return;
+    if (event.newValue === 'dark' || event.newValue === 'light') root.dataset.theme = event.newValue;
+    else delete root.dataset.theme;
+    sync();
+  });
+  sync();
+</script>
