@@ -70,7 +70,7 @@ const education = defineCollection({
 
 const misc = defineCollection({
   loader: glob({ pattern: '{ja,en}.md', base: './content/misc' }),
-  schema: z.strictObject({ title: z.string(), apple_music: profileUrl }),
+  schema: z.strictObject({ title: z.string(), apple_music: profileUrl, sauna_ikitai: profileUrl }),
 });
 
 export const collections = { research, about, profile, history, career, education, misc };

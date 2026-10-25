@@ -1,5 +1,5 @@
 ---
-interface Props { name: 'document' | 'code' | 'external' | 'print' | 'grid'; size?: number }
+interface Props { name: 'document' | 'code' | 'external' | 'print' | 'grid' | 'sauna'; size?: number }
 const { name, size = 16 } = Astro.props;
 const paths = {
   document: ['M13 3H6v18h12V8l-5-5Z', 'M13 3v5h5M9 12h6M9 16h6'],
@@ -7,6 +7,7 @@ const paths = {
   external: ['M14 3h7v7M21 3l-9 9', 'M10 5H4v15h15v-6'],
   print: ['M6 9V3h12v6M6 18H3V9h18v9h-3M6 14h12v7H6Z'],
   grid: ['M3 3h7v7H3ZM14 3h7v7h-7ZM3 14h7v7H3ZM14 14h7v7h-7Z'],
+  sauna: ['M6 13c-3-3 3-5 0-8M12 13c-3-3 3-5 0-8M18 13c-3-3 3-5 0-8', 'M3 17h18M5 17v4m14-4v4'],
 };
 ---
 <svg class="action-icon" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">

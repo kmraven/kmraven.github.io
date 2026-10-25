@@ -13,4 +13,4 @@ The source image is unchanged; the site displays it in grayscale.
 Brand marks belong to their respective owners and identify links to their
 services. ORCID and the iD logo are trademarks of ORCID, Inc.
 
-Document, code, external-link, printer and grid outlines are drawn for this site.
+Document, code, external-link, printer, grid and sauna outlines are drawn for this site.

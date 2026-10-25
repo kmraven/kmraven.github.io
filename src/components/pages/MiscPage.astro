@@ -15,5 +15,8 @@ const { Content } = await render(entry);
 <SiteLayout lang={lang} page="misc" title={`${entry.data.title} | ${fullName(data.profile, lang)}`} description={pageDescription('misc', lang, fullName(data.profile, lang))}>
   <div class="page-heading"><h1 class="misc-title"><ActionIcon name="grid" size={28} />{entry.data.title}</h1></div>
   <div class="prose misc-prose"><Content /></div>
-  {entry.data.apple_music && <a class="misc-profile-link" href={entry.data.apple_music}><BrandIcon name="Apple" size={23} /><span>Apple Music</span><ActionIcon name="external" size={14} /></a>}
+  {(entry.data.apple_music || entry.data.sauna_ikitai) && <ul class="misc-profile-links">
+    {entry.data.apple_music && <li><a class="misc-profile-link" href={entry.data.apple_music}><BrandIcon name="Apple" size={23} /><span>Apple Music</span><ActionIcon name="external" size={14} /></a></li>}
+    {entry.data.sauna_ikitai && <li><a class="misc-profile-link" href={entry.data.sauna_ikitai}><ActionIcon name="sauna" size={23} /><span>{lang === 'ja' ? 'サウナイキタイ' : 'Sauna Ikitai'}</span><ActionIcon name="external" size={14} /></a></li>}
+  </ul>}
 </SiteLayout>

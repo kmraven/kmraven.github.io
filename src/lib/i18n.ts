@@ -64,7 +64,7 @@ export const copy = {
     homeDescription: '研究者プロフィール。所属、研究分野、論文・プレプリント、学会発表、CVを掲載しています。',
     publicationsDescription: '研究業績。論文・プレプリント、学会発表と関連資料へのリンク。',
     cvDescription: 'Web CV。公開している所属、経歴、学歴、研究分野と研究業績。',
-    miscDescription: '趣味や好きなものをまとめるMisc.ページ（WIP）。Apple Musicのプロフィールへのリンク。',
+    miscDescription: '趣味や好きなものをまとめるMisc.ページ（WIP）。Apple Music・サウナイキタイのプロフィールへのリンク。',
     printNote: '印刷用のレイアウトに対応しています。',
   },
   en: {
@@ -80,7 +80,7 @@ export const copy = {
     homeDescription: 'Research profile, affiliation, research areas, papers, preprints, conference presentations, and curriculum vitae.',
     publicationsDescription: 'Papers, preprints, and conference presentations, with links to related resources.',
     cvDescription: 'Academic curriculum vitae: affiliation, experience, education, research areas, and research outputs.',
-    miscDescription: 'Miscellaneous interests (WIP), with a link to my Apple Music profile.',
+    miscDescription: 'Miscellaneous interests (WIP), with links to my Apple Music and Sauna Ikitai profiles.',
     printNote: 'A print layout is available.',
   },
 } as const;

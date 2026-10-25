@@ -167,7 +167,8 @@
   .page-intro { margin-top: 12px; color: var(--muted); font-size: 1rem; }
   .misc-title { display: flex; align-items: center; gap: 14px; }
   .misc-prose { padding-top: 0; color: var(--muted); }
-  .misc-profile-link { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; margin-top: 24px; color: var(--body); }
+  .misc-profile-links { display: flex; flex-wrap: wrap; gap: 12px 32px; margin-top: 24px; list-style: none; }
+  .misc-profile-link { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; color: var(--body); }
   .misc-profile-link:hover { color: var(--accent); }
   .misc-profile-link > .action-icon { color: var(--muted); }
   .section-navigation ul { list-style: none; display: flex; gap: 12px 28px; flex-wrap: wrap; }
