@@ -103,6 +103,7 @@
   .brand:hover { text-decoration: none; color: var(--accent); }
   .nav-links { display: flex; gap: 24px; list-style: none; }
   .nav-links a { display: inline-flex; min-height: 44px; align-items: center; gap: 6px; font-size: .875rem; color: var(--muted); position: relative; }
+  .nav-links .nav-icon-link { min-width: 44px; justify-content: center; }
   .nav-links a[aria-current="page"] { color: var(--ink); font-weight: 600; }
   .nav-links a[aria-current="page"]::after { content: ''; position: absolute; height: 2px; background: var(--accent); bottom: 4px; left: 0; right: 0; }
   .nav-links a:hover { color: var(--ink); text-decoration: none; }
