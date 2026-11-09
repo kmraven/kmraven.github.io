@@ -223,7 +223,14 @@
   select.bio-date { min-height: 36px; max-width: 100%; padding: 4px 6px; border: 1px solid transparent; border-radius: 4px; color: var(--muted); background-color: transparent; cursor: pointer; }
   select.bio-date:hover { color: var(--ink); background-color: color-mix(in srgb, var(--paper) 90%, var(--ink)); }
   select.bio-date option { color: var(--ink); background: var(--paper); }
-  .bio-body { padding: 24px; line-height: 1.85; }
+  .bio-body {
+    padding: 24px;
+    font-family: Menlo, Consolas, "Liberation Mono", monospace;
+    font-kerning: none;
+    font-variant-ligatures: none;
+    font-feature-settings: "palt" 0;
+    line-height: 1.85;
+  }
 }
 
 @layer responsive {
