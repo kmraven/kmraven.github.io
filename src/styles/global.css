@@ -213,7 +213,17 @@
   .career-prose li + li { margin-top: 16px; }
   .career-prose li { break-inside: avoid; }
   .prose img { height: auto; margin-block: 12px; }
-  .profile-bio { grid-column: 1 / -1; padding-top: 16px; }
+  .profile-bio { grid-column: 1 / -1; margin-top: 16px; }
+  .bio-editor { border: 1px solid var(--line); border-radius: 6px; min-width: 0; }
+  .bio-toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0 12px; padding: 4px 16px 4px 24px; border-bottom: 1px solid var(--line); border-radius: 5px 5px 0 0; background: color-mix(in srgb, var(--paper) 95%, var(--ink)); color: var(--muted); }
+  .bio-filename, .bio-date { font: .8125rem/1.6 ui-monospace, SFMono-Regular, Consolas, monospace; }
+  .bio-filename { display: inline-flex; align-items: center; gap: 8px; padding-block: 8px; white-space: nowrap; }
+  .bio-date { margin-left: auto; font-variant-numeric: tabular-nums; }
+  time.bio-date { padding: 4px 6px; }
+  select.bio-date { min-height: 36px; max-width: 100%; padding: 4px 6px; border: 1px solid transparent; border-radius: 4px; color: var(--muted); background-color: transparent; cursor: pointer; }
+  select.bio-date:hover { color: var(--ink); background-color: color-mix(in srgb, var(--paper) 90%, var(--ink)); }
+  select.bio-date option { color: var(--ink); background: var(--paper); }
+  .bio-body { padding: 24px; line-height: 1.85; }
 }
 
 @layer responsive {
@@ -239,6 +249,8 @@
     .profile-affiliations { margin-top: 16px; }
     .profile-research { margin-top: 16px; gap: 4px 12px; }
     .content-section { margin-top: 34px; }
+    .bio-toolbar { padding-inline: 16px 8px; gap: 0 8px; }
+    .bio-body { padding: 20px 16px; }
     .section-heading { padding-bottom: 10px; }
     .section-heading h2 { font-size: 1.1875rem; }
     .home-outputs .entry-title { font-size: 1.0625rem; }
@@ -258,6 +270,7 @@
     .profile-wordmark-link { margin-right: 0; }
   }
   @media (prefers-reduced-motion: reduce) { :root { scroll-behavior: auto; } }
+  @media (pointer: coarse) { select.bio-date { min-height: 44px; font-size: 1rem; } }
 }
 
 @layer print {

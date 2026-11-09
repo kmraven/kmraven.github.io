@@ -9,6 +9,7 @@ import Localized from '../Localized.astro';
 import Affiliations from '../Affiliations.astro';
 import PublicationsSection from '../PublicationsSection.astro';
 import ProfileLinks from '../ProfileLinks.astro';
+import Biography from '../Biography.astro';
 interface Props { lang: Locale }
 const { lang } = Astro.props;
 const t = copy[lang];
@@ -16,9 +17,6 @@ const name = fullName(data.profile, lang);
 const secondaryName = fullName(data.profile, lang === 'ja' ? 'en' : 'ja');
 const profile = await getEntry('profile', 'profile');
 const photo = profile?.data.photo;
-const about = await getEntry('about', lang);
-const renderedAbout = about && hasResearchContent(about.data.published, about.body) ? await render(about) : undefined;
-const AboutContent = renderedAbout?.Content;
 const research = await getEntry('research', lang);
 const showResearch = hasResearchContent(research?.data.published, research?.body);
 const rendered = showResearch && research ? await render(research) : undefined;
@@ -39,7 +37,7 @@ const ResearchContent = rendered?.Content;
       <ul class="area-list" aria-labelledby="areas-title">{data.researchAreas.map((area) => <li><Localized value={area.field} lang={lang} /></li>)}</ul>
     </div>}
     <nav aria-label={t.moreProfile}><ProfileLinks cvHref={pagePath('cv', lang)} /></nav>
-    {AboutContent && <div class="profile-bio prose"><AboutContent /></div>}
+    <Biography lang={lang} />
   </section>
   {ResearchContent && research && <section class="content-section research-section" aria-labelledby="research-title"><div class="section-heading"><h2 id="research-title">{research.data.title}</h2></div><div class="prose"><ResearchContent /></div></section>}
   {(data.publications.length > 0 || data.presentations.length > 0) && <PublicationsSection lang={lang} />}

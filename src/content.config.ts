@@ -2,6 +2,7 @@ import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 import { isPartialDate, historySchema } from './data/schema';
+import { aboutLoader } from './loaders/about';
 
 const research = defineCollection({
   loader: glob({ pattern: '{ja,en}.md', base: './content/research' }),
@@ -9,8 +10,8 @@ const research = defineCollection({
 });
 
 const about = defineCollection({
-  loader: glob({ pattern: '{ja,en}.md', base: './content/about' }),
-  schema: z.object({ published: z.boolean().default(false) }),
+  loader: aboutLoader(),
+  schema: z.object({ published: z.boolean(), lang: z.enum(['ja', 'en']), date: z.iso.date(), latest: z.boolean() }),
 });
 
 const profileUrl = z.string().trim().pipe(z.union([

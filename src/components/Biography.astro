@@ -1,0 +1,39 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { Locale } from '../data/schema';
+import ActionIcon from './ActionIcon.astro';
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const entries = (await getCollection('about', entry => entry.data.lang === lang))
+  .sort((a, b) => Number(b.data.latest) - Number(a.data.latest) || b.data.date.localeCompare(a.data.date));
+const revisions = await Promise.all(entries.map(async entry => ({ ...entry, ...await render(entry) })));
+const latest = revisions[0];
+const CurrentContent = latest?.Content;
+const dateLabel = (date: string) => date.replaceAll('-', '.');
+---
+{latest && CurrentContent && <section class="profile-bio bio-editor" data-biography aria-label={lang === 'ja' ? '自己紹介' : 'About me'}>
+  <div class="bio-toolbar">
+    <span class="bio-filename"><ActionIcon name="document" />about/{lang}.md</span>
+    <time class="bio-date" datetime={latest.data.date}>{dateLabel(latest.data.date)}</time>
+    {revisions.length > 1 && <select class="bio-date" aria-label={lang === 'ja' ? '自己紹介の版を日付で選択' : 'Select biography version by date'} aria-controls={`bio-content-${lang}`} hidden>
+      {revisions.map((revision, index) => <option value={revision.data.date} selected={index === 0}>{dateLabel(revision.data.date)}</option>)}
+    </select>}
+  </div>
+  <div class="bio-body prose" id={`bio-content-${lang}`} aria-live="polite" aria-atomic="true"><CurrentContent /></div>
+  {revisions.length > 1 && revisions.map(({ data, Content }) => <template data-bio-date={data.date}><Content /></template>)}
+</section>}
+<script>
+  document.querySelectorAll<HTMLElement>('[data-biography]').forEach(editor => {
+    const picker = editor.querySelector('select');
+    const body = editor.querySelector('.bio-body');
+    const date = editor.querySelector('time');
+    if (!picker || !body || !date) return;
+    picker.hidden = false;
+    date.hidden = true;
+    picker.addEventListener('change', () => {
+      const template = Array.from(editor.querySelectorAll('template'))
+        .find(item => item.dataset.bioDate === picker.value);
+      if (template) body.replaceChildren(template.content.cloneNode(true));
+    });
+  });
+</script>
