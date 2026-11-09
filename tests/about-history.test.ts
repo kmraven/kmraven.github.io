@@ -45,7 +45,8 @@ test('one latest version per day, with private snapshots and private current con
     await repo.commit('ja', 'Morning', '2026-10-26T10:00:00+09:00');
     await repo.commit('ja', 'Evening **Markdown**', '2026-10-26T20:00:00+09:00');
     const versions = await readAboutRevisions(repo.root, 'ja');
-    assert.deepEqual(versions.map(v => v.date), ['2026-10-26', '2026-10-24']);
+    assert.deepEqual(versions.map(v => v.date), ['2026-10-26']);
+    assert(!JSON.stringify(versions).includes('Initial'));
     assert(versions[0].body.includes('**Markdown**'));
     assert(!JSON.stringify(versions).includes('DRAFT_TEST_BIO'));
     await writeFile(path.join(repo.root, 'content/about/ja.md'), markdown('Hidden now', false));
@@ -63,7 +64,7 @@ test('uncommitted changes use filesystem date and replace the same day, without 
     await writeFile(file, markdown('Local preview'));
     const date = new Date('2026-10-25T12:00:00+09:00');
     await utimes(file, date, date);
-    assert.deepEqual((await readAboutRevisions(repo.root, 'ja')).map(v => v.date), ['2026-10-25', '2026-10-24']);
+    assert.deepEqual((await readAboutRevisions(repo.root, 'ja')).map(v => v.date), ['2026-10-25']);
     await rm(path.join(repo.root, '.git'), { recursive: true, force: true });
     assert.deepEqual((await readAboutRevisions(repo.root, 'ja')).map(v => v.date), ['2026-10-25']);
     await writeFile(file, markdown('<!-- nothing public -->'));

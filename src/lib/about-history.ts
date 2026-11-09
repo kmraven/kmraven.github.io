@@ -3,6 +3,8 @@ import { readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { parseFrontmatter } from 'astro/markdown';
 
+const historyStartDate = '2026-10-25';
+
 export interface AboutRevision {
   date: string;
   body: string;
@@ -58,6 +60,7 @@ export async function readAboutRevisions(root: string, lang: 'ja' | 'en'): Promi
   const seenDates = new Set<string>();
   const revisions: AboutRevision[] = [];
   for (const snapshot of snapshots) {
+    if (snapshot.date < historyStartDate) continue;
     // At most one version per day, including days whose last version was a draft.
     if (seenDates.has(snapshot.date)) continue;
     seenDates.add(snapshot.date);
