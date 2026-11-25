@@ -1,0 +1,50 @@
+---
+import type { Locale } from '../data/schema';
+import './music-map/map.css';
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const ja = lang === 'ja';
+---
+<section class="music-map" data-music-map data-lang={lang} aria-label={ja ? '再生履歴マップ' : 'Listening history map'}>
+  <p data-status role="status">{ja ? '再生履歴を読み込んでいます…' : 'Loading listening history…'}</p>
+  <noscript>{ja ? 'マップを表示するには JavaScript を有効にしてください。' : 'Enable JavaScript to explore the map.'}</noscript>
+  <div data-view hidden>
+    <div class="mm-period">
+      <label>{ja ? '表示期間' : 'Period'} <select data-year></select></label>
+      <span data-totals></span>
+    </div>
+    <div role="search" class="mm-search-region" aria-label={ja ? '音楽遍歴を検索' : 'Search listening history'}>
+      <label class="mm-search">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>
+        <span class="sr-only">{ja ? '曲名・アーティスト名・ジャンル・曲IDで検索' : 'Search tracks, artists, genres or track IDs'}</span>
+        <input type="search" data-search autocomplete="off" enterkeyhint="search" aria-controls="music-directory-list" placeholder={ja ? '曲名・アーティスト名・ジャンル・曲IDで検索' : 'Search tracks, artists, genres or track IDs'} />
+      </label>
+    </div>
+    <div data-results-slot></div>
+    <div class="mm-frame">
+      <div class="mm-field">
+        <canvas data-atlas aria-describedby="mm-atlas-hint mm-group-note" tabindex="0" role="group" aria-label={ja ? 'ジャンル・アーティスト・曲の地図' : 'Map of genres, artists and tracks'}></canvas>
+      </div>
+      <section id="mm-group-note" class="mm-group-note" data-group-note hidden></section>
+      <p id="mm-atlas-hint" class="mm-atlas-hint">{ja ? '拡大するとジャンルの中にアーティストや曲が現れます。スクロール、ピンチ、＋／−で拡大・縮小。ドラッグまたは矢印キーで移動できます。' : 'Zoom into a genre to see its artists and tracks. Scroll, pinch or use +/− to zoom. Drag or use the arrow keys to pan.'}</p>
+      <div class="mm-caption">
+        <div data-legend class="mm-legend"></div>
+      </div>
+    </div>
+    <nav class="mm-path" data-path aria-label={ja ? '一覧の現在位置' : 'Directory location'} hidden></nav>
+    <section data-details class="mm-details" hidden></section>
+    <section data-related class="mm-related" hidden></section>
+    <div data-browse-slot>
+      <section class="mm-directory" data-directory aria-labelledby="music-directory-heading">
+        <h2 id="music-directory-heading" data-heading tabindex="-1"></h2>
+        <p class="mm-count" data-count role="status"></p>
+        <ul id="music-directory-list" class="mm-list" data-list></ul>
+        <div class="mm-pager mm-list-pager" data-list-pager></div>
+      </section>
+    </div>
+  </div>
+</section>
+<script>
+  import { mountMusicMap } from './music-map/view';
+  document.querySelectorAll<HTMLElement>('[data-music-map]').forEach(mountMusicMap);
+</script>

@@ -3,7 +3,7 @@ import { getEntry, render } from 'astro:content';
 import SiteLayout from '../../layouts/SiteLayout.astro';
 import { data } from '../../data';
 import type { Locale } from '../../data/schema';
-import { fullName, pageDescription } from '../../lib/i18n';
+import { fullName, pageDescription, pagePath } from '../../lib/i18n';
 import ActionIcon from '../ActionIcon.astro';
 import BrandIcon from '../BrandIcon.astro';
 interface Props { lang: Locale }
@@ -16,6 +16,7 @@ const { Content } = await render(entry);
   <div class="page-heading"><h1 class="misc-title"><ActionIcon name="grid" size={28} />{entry.data.title}</h1></div>
   <div class="prose misc-prose"><Content /></div>
   {(entry.data.apple_music || entry.data.sauna_ikitai) && <ul class="misc-profile-links">
+    <li><a class="misc-profile-link" href={pagePath('music', lang)}>{lang === 'ja' ? '音楽遍歴を見る' : 'Explore my listening history'} →</a></li>
     {entry.data.apple_music && <li><a class="misc-profile-link" href={entry.data.apple_music}><BrandIcon name="Apple" size={23} /><span>Apple Music</span><ActionIcon name="external" size={14} /></a></li>}
     {entry.data.sauna_ikitai && <li><a class="misc-profile-link" href={entry.data.sauna_ikitai}><ActionIcon name="sauna" size={23} /><span>{lang === 'ja' ? 'サウナイキタイ' : 'Sauna Ikitai'}</span><ActionIcon name="external" size={14} /></a></li>}
   </ul>}

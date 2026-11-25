@@ -1,7 +1,7 @@
 import type { Locale, LocalizedText, LocalizedAuthors, Profile } from '../data/schema.ts';
 
-export type PageKey = 'home' | 'cv' | 'misc';
-export const pagePaths: Record<PageKey, string> = { home: '', cv: 'cv/', misc: 'misc/' };
+export type PageKey = 'home' | 'cv' | 'misc' | 'music';
+export const pagePaths: Record<PageKey, string> = { home: '', cv: 'cv/', misc: 'misc/', music: 'music/' };
 export function pagePath(page: PageKey, lang: Locale): string {
   return `${lang === 'en' ? '/en/' : '/'}${pagePaths[page]}`;
 }
@@ -65,6 +65,7 @@ export const copy = {
     publicationsDescription: '研究業績。論文・プレプリント、学会発表と関連資料へのリンク。',
     cvDescription: 'Web CV。公開している所属、経歴、学歴、研究分野と研究業績。',
     miscDescription: '趣味や好きなものをまとめるMisc.ページ（WIP）。Apple Music・サウナイキタイのプロフィールへのリンク。',
+    musicDescription: 'Apple Musicの聴取履歴。ジャンルやアーティストをたどり、年ごとによく聴いた曲を探せます。',
     printNote: '印刷用のレイアウトに対応しています。',
   },
   en: {
@@ -81,6 +82,7 @@ export const copy = {
     publicationsDescription: 'Papers, preprints, and conference presentations, with links to related resources.',
     cvDescription: 'Academic curriculum vitae: affiliation, experience, education, research areas, and research outputs.',
     miscDescription: 'Miscellaneous interests (WIP), with links to my Apple Music and Sauna Ikitai profiles.',
+    musicDescription: 'Apple Music listening history. Explore artists, genres and tracks across the years.',
     printNote: 'A print layout is available.',
   },
 } as const;

@@ -13,7 +13,7 @@ const data = publicDataSchema.parse(JSON.parse(await readFile(path.join(root, 's
 const pages = new Map<string, string>();
 const fileFor = (pathname: string) => path.join(dist, pathname.endsWith('/') ? `${pathname}index.html` : pathname);
 for (const lang of ['ja', 'en'] as const) {
-  for (const page of ['home', 'cv', 'misc'] as const) {
+  for (const page of ['home', 'cv', 'misc', 'music'] as const) {
     const route = pagePath(page, lang);
     const html = await readFile(fileFor(route), 'utf8');
     pages.set(route, html);
@@ -52,11 +52,7 @@ const sitemapIndex = await readFile(path.join(dist, 'sitemap-index.xml'), 'utf8'
 assert(sitemapIndex.includes(`${origin}/sitemap-0.xml`));
 const sitemap = await readFile(path.join(dist, 'sitemap-0.xml'), 'utf8');
 for (const route of pages.keys()) assert(sitemap.includes(`<loc>${origin}${route}</loc>`), `Missing sitemap route: ${route}`);
-for (const lang of ['ja', 'en'] as const) {
-  const oldRoute = lang === 'ja' ? '/music/' : '/en/music/';
-  await assert.rejects(access(fileFor(oldRoute)), { code: 'ENOENT' }, `Removed route still generated: ${oldRoute}`);
-  assert(!sitemap.includes(`<loc>${origin}${oldRoute}</loc>`), `Legacy route in sitemap: ${oldRoute}`);
-}
+await access(fileFor('/music/history.json'));
 const tracked = spawnSync('git', ['ls-files', '-z'], { cwd: root, encoding: 'utf8' });
 if (tracked.status === 0) {
   const unsafe = tracked.stdout.split('\0').filter((file) => /\.(?:jsonl|zip)$/i.test(file) || /(?:^|\/)\.DS_Store$/.test(file) || file.startsWith('private/'));

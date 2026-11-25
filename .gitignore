@@ -12,5 +12,7 @@ dist/
 *.jsonl
 *.zip
 private/
+__pycache__/
+*.p8
 coverage/
 test-results/

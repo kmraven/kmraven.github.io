@@ -1,0 +1,21 @@
+---
+import { data } from '../../data';
+import type { Locale } from '../../data/schema';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { fullName, pageDescription, pagePath } from '../../lib/i18n';
+import MusicMap from '../MusicMap.astro';
+
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const ja = lang === 'ja';
+const name = fullName(data.profile, lang);
+const title = ja ? '音楽遍歴' : 'Listening history';
+---
+<SiteLayout lang={lang} page="music" title={`${title} | ${name}`} description={pageDescription('music', lang, name)}>
+  <div class="page-heading">
+    <a class="text-link" href={pagePath('misc', lang)}>← Misc.</a>
+    <h1>{title}</h1>
+    <p class="page-intro">{ja ? 'Apple Musicで聴いてきた音楽。気になるジャンルや名前を選ぶと、その頃よく聴いた曲までたどれます。' : 'The music I’ve listened to on Apple Music. Explore a genre or an artist to find the songs I kept coming back to.'}</p>
+  </div>
+  <MusicMap lang={lang} />
+</SiteLayout>
